@@ -1,21 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   philo.c                                            :+:      :+:    :+:   */
+/*   get_time.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: zogrir <zogrir@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/03/12 01:46:04 by zogrir            #+#    #+#             */
-/*   Updated: 2025/03/12 02:50:33 by zogrir           ###   ########.fr       */
+/*   Created: 2025/03/15 05:42:44 by zogrir            #+#    #+#             */
+/*   Updated: 2025/03/15 06:24:30 by zogrir           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "philo.h"
-
-int	main(int ac, char **av)
+#include "./philo.h"
+//current milisecond
+long long   get_time(void)
 {
-	t_data	data;
-
-	if (!ft_check_args(ac, av, &data))
-		return (-1);
+    struct timeval tv;
+    gettimeofday(&tv, NULL);
+    return (tv.tv_sec * 1000 + tv.tv_usec / 1000);
 }
+
+void    usleep_precise(long long time_ms)
+{
+    long long start;
+
+    start = get_time();
+    while (get_time() - start < time_ms)
+    {
+        usleep(100);
+    }
+}
+
