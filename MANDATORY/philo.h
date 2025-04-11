@@ -6,7 +6,7 @@
 /*   By: zogrir <zogrir@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/12 01:47:14 by zogrir            #+#    #+#             */
-/*   Updated: 2025/04/08 11:00:29 by zogrir           ###   ########.fr       */
+/*   Updated: 2025/04/11 01:46:01 by zogrir           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,29 +21,47 @@
 #include <sys/time.h>
 
 
-typedef struct s_data
-{
-	int				num_philos;
-	int				time_to_die;
-	int				time_to_eat;
-	int				time_to_sleep;
-	int				max_meals;
-	long long		start_time;
-	pthread_mutex_t	*forks;
-	pthread_mutex_t	print_lock;
-	int				someone_die;
-}	t_data;
+#define RED     "\033[31m"
+#define GREEN   "\033[32m"
+#define YELLOW  "\033[33m"
+#define BLUE    "\033[34m"
+#define CYAN    "\033[36m"
+#define RESET   "\033[0m"
 
 typedef struct s_philo
 {
+	pthread_t		thread;
 	int				id;
-	long long		last_meal_time;
-	int				meal_count;
+	int				eating_flag;
+	int				meals_eaten;
+	int				num_philos;
+	long			time_to_die;
+	long			time_to_eat;
+	long			time_to_sleep;
+	int				max_meals; // optional arg
+	size_t			start_time;
+	size_t			last_meal; // timeStamp
+	int				*dead;
 	pthread_mutex_t	*l_fork;
 	pthread_mutex_t	*r_fork;
-	t_data			*data;
-	pthread_t		thread;
+	pthread_mutex_t	*write_lock;
+	pthread_mutex_t	*dead_lock;
+	pthread_mutex_t	*meal_lock;
 }	t_philo;
+
+
+
+typedef struct s_data
+{
+	int				dead_flag;
+	pthread_mutex_t dead_lock;
+	pthread_mutex_t	meal_lock;
+	pthread_mutex_t	write_lock;
+	t_philo			*philos;
+	pthread_mutex_t	*forks;
+}	t_data;
+
+
 
 
 
@@ -54,7 +72,7 @@ void		error_msg_caller(int msg);
 int			ft_check_args(int ac, char **av, t_data *data);
 
 //init
-int			data_init(t_data *data, int ac, char **av);
+int	data_init(t_data *data, int num_phlos);
 int			init_all(int ac, char **av, t_data *data, t_philo *philo);
 
 //get_time
