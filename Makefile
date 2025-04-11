@@ -2,7 +2,8 @@ NAME = philo
 CC = cc
 CFLAGS = -Wall -Wextra -Werror #-g -fsanitize=address
 
-SRC_MANDATORY = MANDATORY/error.c MANDATORY/parssing.c MANDATORY/main.c MANDATORY/get_time.c MANDATORY/utils.c MANDATORY/init.c
+SRC_MANDATORY = MANDATORY/error.c MANDATORY/parssing.c MANDATORY/main.c MANDATORY/get_time.c MANDATORY/utils.c MANDATORY/init.c \
+MANDATORY/lifesycle.c
 
 OBJ_MANDATORY = $(SRC_MANDATORY:.c=.o)
 

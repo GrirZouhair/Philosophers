@@ -6,7 +6,7 @@
 /*   By: zogrir <zogrir@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/12 01:47:14 by zogrir            #+#    #+#             */
-/*   Updated: 2025/04/11 01:46:01 by zogrir           ###   ########.fr       */
+/*   Updated: 2025/04/11 02:31:36 by zogrir           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,12 +21,6 @@
 #include <sys/time.h>
 
 
-#define RED     "\033[31m"
-#define GREEN   "\033[32m"
-#define YELLOW  "\033[33m"
-#define BLUE    "\033[34m"
-#define CYAN    "\033[36m"
-#define RESET   "\033[0m"
 
 typedef struct s_philo
 {
@@ -81,4 +75,7 @@ void		usleep_precise(long long time_ms);
 
 //utils
 int			ft_atoi(const char *s);
+
+//lifesycle
+void* ft_lifesycle(void *arg);
 #endif

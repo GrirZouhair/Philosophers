@@ -6,7 +6,7 @@
 /*   By: zogrir <zogrir@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/02 13:17:25 by zogrir            #+#    #+#             */
-/*   Updated: 2025/04/11 01:46:11 by zogrir           ###   ########.fr       */
+/*   Updated: 2025/04/11 02:39:21 by zogrir           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,39 +107,23 @@ int	philo_init(t_philo *philo, t_data *data, char **av)
 	int	num_philos;
 
 	i = 0;
-	num_philos = ft_atoi(av[1]);
-	printf(GREEN"=== Philosopher Initialization Values ===\n"RESET);
-	
-	// Initialize each philosopher
+	num_philos = ft_atoi(av[1]);	
 	while (i < num_philos)
 	{
 		if (!init_philo_data(philo, data, i, av))
 			return (error_msg_caller(4), 0);
+		// Create thread for each philosopher
+        if (pthread_create(&philo[i].thread, NULL, &ft_lifesycle, &philo[i]) != 0)
+            return (error_msg_caller(7), 0);
 		i++;
 	}
-
-	// Print all initialized values
-	printf(CYAN"\nPhilosopher Count: %d\n"RESET, num_philos);
-	printf("--------------------------------\n");
-	
-	i = 0;
-	while (i < num_philos)
-	{
-		printf(YELLOW"Philosopher %d:\n"RESET, philo[i].id);
-		printf("  ID: %d\n", philo[i].id);
-		printf("  Time to die: %ld ms\n", philo[i].time_to_die);
-		printf("  Time to eat: %ld ms\n", philo[i].time_to_eat);
-		printf("  Time to sleep: %ld ms\n", philo[i].time_to_sleep);
-		printf("  Max meals: %d\n", philo[i].max_meals);
-		printf("  Left fork: %p\n", (void *)philo[i].l_fork);
-		printf("  Right fork: %p\n", (void *)philo[i].r_fork);
-		printf("  Start time: %zu\n", philo[i].start_time);
-		printf("  Last meal: %zu\n", philo[i].last_meal);
-		printf("--------------------------------\n");
-		i++;
-	}
-	
-	printf(GREEN"=== Initialization Complete ===\n\n"RESET);
+	// Wait for all threads to complete
+    i = 0;
+    while (i < num_philos)
+    {
+        pthread_join(philo[i].thread, NULL);
+        i++;
+    }
 	return (1);
 }
 int	init_all(int ac, char **av, t_data *data, t_philo *philo)
