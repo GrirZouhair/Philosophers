@@ -6,7 +6,7 @@
 /*   By: zogrir <zogrir@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/05 09:19:11 by zogrir            #+#    #+#             */
-/*   Updated: 2025/04/05 11:21:35 by zogrir           ###   ########.fr       */
+/*   Updated: 2025/04/20 08:43:38 by zogrir           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,4 +55,37 @@ int	ft_atoi(const char *s)
 		i++;
 	}
 	return ((int)result * sign);
-} 
+}
+
+int	ft_zero_check(t_philo *philo)
+{
+	if (philo->num_philos == 0
+		|| philo->time_to_die == 0
+		|| philo->time_to_eat == 0
+		|| philo->time_to_sleep == 0)
+		return (0);
+	if (philo->max_meals == 0)
+		return (0);
+	return (1);
+}
+
+int	ft_overflow_check(t_philo *philo)
+{
+	if (philo->num_philos == -1
+		|| philo->time_to_die == -1
+		|| philo->time_to_eat == -1
+		|| philo->time_to_sleep == -1)
+		return (0);
+	if (philo->max_meals == -1)
+		return (0);
+	return (1);
+}
+
+void	assign_forks(t_philo *philo, t_data *data, int i)
+{
+	philo[i].l_fork = &data->forks[i];
+	if (philo[i].num_philos == 1)
+		philo[i].r_fork = NULL;
+	else
+		philo[i].r_fork = &data->forks[(i + 1) % philo[i].num_philos];
+}

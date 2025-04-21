@@ -6,7 +6,7 @@
 /*   By: zogrir <zogrir@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/12 01:53:59 by zogrir            #+#    #+#             */
-/*   Updated: 2025/04/05 09:46:43 by zogrir           ###   ########.fr       */
+/*   Updated: 2025/04/16 11:50:11 by zogrir           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,21 +28,19 @@ static int	is_str(char *str)
 	return (1);
 }
 
-int	ft_check_args(int ac, char **av, t_data *data)
+int	ft_check_args(int ac, char **av)
 {
 	int		i;
-	(void )data;
+
 	i = 1;
 	if (ac == 5 || ac == 6)
 	{
 		while (i < ac)
 		{
 			if (!is_str(av[i]))
-				return(error_msg_caller(2), 0);
-			
+				return(error_msg_caller(2), 0);	
 			i++;
 		}
-		
 	}
 	else
 		return(error_msg_caller(1), 0);

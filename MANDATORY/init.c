@@ -6,35 +6,11 @@
 /*   By: zogrir <zogrir@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/02 13:17:25 by zogrir            #+#    #+#             */
-/*   Updated: 2025/04/11 02:39:21 by zogrir           ###   ########.fr       */
+/*   Updated: 2025/04/20 11:42:48 by zogrir           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
-
-static int	ft_zero_check(t_philo *philo)
-{
-	if (philo->num_philos == 0
-		|| philo->time_to_die == 0
-		|| philo->time_to_eat == 0
-		|| philo->time_to_sleep == 0)
-		return (0);
-	if (philo->max_meals == 0)
-		return (0);
-	return (1);
-}
-
-static int	ft_overflow_check(t_philo *philo)
-{
-	if (philo->num_philos == -1
-		|| philo->time_to_die == -1
-		|| philo->time_to_eat == -1
-		|| philo->time_to_sleep == -1)
-		return (0);
-	if (philo->max_meals == -1)
-		return (0);
-	return (1);
-}
 
 static int	init_mutexes(t_data *data, int num_philos)
 {
@@ -65,15 +41,6 @@ int	data_init(t_data *data, int num_philos)
 	if (!init_mutexes(data, num_philos))
 		return (0);
 	return (1);
-}
-
-static void	assign_forks(t_philo *philo, t_data *data, int i)
-{
-	philo[i].l_fork = &data->forks[i];
-	if (philo[i].num_philos == 1)
-		philo[i].r_fork = NULL;
-	else
-		philo[i].r_fork = &data->forks[(i + 1) % philo[i].num_philos];
 }
 
 static int	init_philo_data(t_philo *philo, t_data *data, int i, char **av)
@@ -107,31 +74,32 @@ int	philo_init(t_philo *philo, t_data *data, char **av)
 	int	num_philos;
 
 	i = 0;
-	num_philos = ft_atoi(av[1]);	
+	num_philos = ft_atoi(av[1]);
 	while (i < num_philos)
 	{
 		if (!init_philo_data(philo, data, i, av))
 			return (error_msg_caller(4), 0);
-		// Create thread for each philosopher
-        if (pthread_create(&philo[i].thread, NULL, &ft_lifesycle, &philo[i]) != 0)
-            return (error_msg_caller(7), 0);
+		if (pthread_create(&philo[i].thread, NULL,
+				&ft_lifesycle, &philo[i]) != 0)
+			return (error_msg_caller(7), 0);
 		i++;
 	}
-	// Wait for all threads to complete
-    i = 0;
-    while (i < num_philos)
-    {
-        pthread_join(philo[i].thread, NULL);
-        i++;
-    }
+	ft_monitoring(data); // run in the main thread
+	i = 0;
+	while (i < num_philos)
+	{
+		pthread_join(philo[i].thread, NULL);
+		i++;
+	}
 	return (1);
 }
+
 int	init_all(int ac, char **av, t_data *data, t_philo *philo)
 {
 	int	num_philos;
 
 	num_philos = ft_atoi(av[1]);
-	if (!ft_check_args(ac, av, data))
+	if (!ft_check_args(ac, av))
 		return (0);
 	if (!data_init(data, num_philos))
 		return (0);
