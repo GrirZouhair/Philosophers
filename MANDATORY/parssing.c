@@ -38,11 +38,11 @@ int	ft_check_args(int ac, char **av)
 		while (i < ac)
 		{
 			if (!is_str(av[i]))
-				return(error_msg_caller(2), 0);	
+				return (error_msg_caller(2), 0);
 			i++;
 		}
 	}
 	else
-		return(error_msg_caller(1), 0);
+		return (error_msg_caller(1), 0);
 	return (1);
 }

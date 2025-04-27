@@ -12,57 +12,58 @@
 
 #include "philo.h"
 
-int	all_philos_eaten(t_philo *philo)
+static void	check_philosopher(t_data *data, t_philo *philo, int *all_full)
 {
-	int i = 0;
-
-	if (philo[0].max_meals == -2)
-		return (0); 
-	while (i < philo[0].num_philos)
+	pthread_mutex_lock(&data->meal_lock);
+	if (get_time() - (long)philo->last_meal > (long)philo->time_to_die
+		&& !philo->eating_flag)
 	{
-		if (philo[i].meals_eaten < philo[i].max_meals)
-			return (0);
-		i++;
+		pthread_mutex_lock(&data->dead_lock);
+		data->dead_flag = 1;
+		pthread_mutex_unlock(&data->dead_lock);
+		pthread_mutex_lock(&data->write_lock);
+		printf("%lld %d died\n", get_time() - philo->start_time, philo->id);
+		pthread_mutex_unlock(&data->write_lock);
+		pthread_mutex_unlock(&data->meal_lock);
+		return ;
 	}
-	return (1);
+	if (philo->max_meals != -2 && philo->meals_eaten < philo->max_meals)
+		*all_full = 0;
+	pthread_mutex_unlock(&data->meal_lock);
 }
 
-void	ft_dead_call(t_data *data, int i)
+void	ft_monitoring(t_data *data, t_philo *philos)
 {
-	ft_message(&data->philos[i], "died");
-	pthread_mutex_lock(data->philos[i].dead_lock);
-	data->dead_flag = 1;
-	pthread_mutex_unlock(data->philos[i].dead_lock);
-}
-
-int	ft_monitoring(t_data *data)
-{
-	int		i;
-	long	time;
+	int	i;
+	int	all_full;
 
 	while (1)
 	{
-		if (data->dead_flag)
-			break;
-
 		i = 0;
-		while (i < data->philos[0].num_philos)
+		all_full = 1;
+		while (i < philos[0].num_philos)
 		{
-			pthread_mutex_lock(data->philos[i].meal_lock);
-			time = get_time() - data->philos[i].last_meal;
-			if (time > (long)data->philos[i].time_to_die && !data->philos[i].eating_flag)
-			{
-				ft_dead_call(data, i);
-				pthread_mutex_unlock(data->philos[i].meal_lock);
-				return (0);
-			}
-			pthread_mutex_unlock(data->philos[i].meal_lock);
+			check_philosopher(data, &philos[i], &all_full);
+			if (data->dead_flag)
+				return ;
 			i++;
 		}
-		if (all_philos_eaten(data->philos))
-			break;
-
+		if (all_full && philos[0].max_meals != -2)
+		{
+			pthread_mutex_lock(&data->dead_lock);
+			data->dead_flag = 1;
+			pthread_mutex_unlock(&data->dead_lock);
+			return ;
+		}
 		usleep(1000);
 	}
-	return (1);
+}
+
+void	assign_forks(t_philo *philo, t_data *data, int i)
+{
+	philo[i].l_fork = &data->forks[i];
+	if (philo[i].num_philos == 1)
+		philo[i].r_fork = NULL;
+	else
+		philo[i].r_fork = &data->forks[(i + 1) % philo[i].num_philos];
 }

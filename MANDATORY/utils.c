@@ -12,9 +12,9 @@
 
 #include "philo.h"
 
-int ft_isdigit(char c)
+int	ft_isdigit(char c)
 {
-    return (c >= '0' && c <= '9');
+	return (c >= '0' && c <= '9');
 }
 
 static int	ft_long_number(long long result, char current_digit, int sign)
@@ -79,13 +79,4 @@ int	ft_overflow_check(t_philo *philo)
 	if (philo->max_meals == -1)
 		return (0);
 	return (1);
-}
-
-void	assign_forks(t_philo *philo, t_data *data, int i)
-{
-	philo[i].l_fork = &data->forks[i];
-	if (philo[i].num_philos == 1)
-		philo[i].r_fork = NULL;
-	else
-		philo[i].r_fork = &data->forks[(i + 1) % philo[i].num_philos];
 }

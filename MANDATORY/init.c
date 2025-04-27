@@ -84,7 +84,7 @@ int	philo_init(t_philo *philo, t_data *data, char **av)
 			return (error_msg_caller(7), 0);
 		i++;
 	}
-	ft_monitoring(data); // run in the main thread
+	ft_monitoring(data, philo);
 	i = 0;
 	while (i < num_philos)
 	{

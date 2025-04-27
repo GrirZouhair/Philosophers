@@ -1,7 +1,6 @@
 NAME = philo
 CC = cc
-CFLAGS = -Wall -Wextra -Werror #-g -fsanitize=address
-
+CFLAGS = -Wall -Wextra -Werror
 SRC_MANDATORY = MANDATORY/error.c MANDATORY/parssing.c MANDATORY/main.c MANDATORY/get_time.c MANDATORY/utils.c MANDATORY/init.c \
 MANDATORY/lifesycle.c MANDATORY/ft_monitoring.c
 

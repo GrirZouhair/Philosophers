@@ -40,14 +40,24 @@ void	dream(t_philo *philo)
 
 void	eat(t_philo *philo)
 {
-	pthread_mutex_lock(philo->r_fork);
-	ft_message(philo, "has taken a fork");
-	pthread_mutex_lock(philo->l_fork);
-	ft_message(philo, "has taken a fork");
+	if (philo->id % 2 == 0)
+	{
+		pthread_mutex_lock(philo->r_fork);
+		ft_message(philo, "has taken a fork");
+		pthread_mutex_lock(philo->l_fork);
+		ft_message(philo, "has taken a fork");
+	}
+	else
+	{
+		pthread_mutex_lock(philo->l_fork);
+		ft_message(philo, "has taken a fork");
+		pthread_mutex_lock(philo->r_fork);
+		ft_message(philo, "has taken a fork");
+	}
 	ft_message(philo, "is eating");
 	pthread_mutex_lock(philo->meal_lock);
-	philo->eating_flag = 1;
 	philo->last_meal = get_time();
+	philo->eating_flag = 1;
 	philo->meals_eaten++;
 	philo->eating_flag = 0;
 	pthread_mutex_unlock(philo->meal_lock);
@@ -64,8 +74,6 @@ void	*ft_lifesycle(void *arg)
 	if (philo->num_philos == 1)
 	{
 		ft_message(philo, "has taken a fork");
-		usleep_precise(philo->time_to_die);
-		ft_message(philo, "died");
 		return (NULL);
 	}
 	if (philo->id % 2 == 0)
@@ -77,8 +85,3 @@ void	*ft_lifesycle(void *arg)
 	}
 	return (0);
 }
-
-
-
-
-
