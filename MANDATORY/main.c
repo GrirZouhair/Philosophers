@@ -6,17 +6,23 @@
 /*   By: zogrir <zogrir@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/12 01:46:04 by zogrir            #+#    #+#             */
-/*   Updated: 2025/04/08 11:00:50 by zogrir           ###   ########.fr       */
+/*   Updated: 2025/04/16 11:54:12 by zogrir           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-int	main(int ac, char **av)
-{
-	t_data	data;
-	t_philo philo;
-	if (!init_all(ac, av, &data, &philo))
-		return(1);
-	return(0);
+int	main(int argc, char **argv)
+{	
+	t_data		data;
+	t_philo		*philos;
+	int			num_philos;
+
+	num_philos = ft_atoi(argv[1]);
+	philos = malloc(sizeof(t_philo) * num_philos);
+	if (!philos)
+		return (error_msg_caller(5), 1);
+	if (!init_all(argc, argv, &data, philos))
+		return (free(philos), 1);
+	return (free(philos), 0);
 }

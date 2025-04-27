@@ -11,22 +11,22 @@
 /* ************************************************************************** */
 
 #include "./philo.h"
-//current milisecond
-long long   get_time(void)
+
+long long	get_time(void)
 {
-    struct timeval tv;
-    gettimeofday(&tv, NULL);
-    return (tv.tv_sec * 1000 + tv.tv_usec / 1000);
+	struct timeval	tv;
+
+	gettimeofday(&tv, NULL);
+	return (tv.tv_sec * 1000 + tv.tv_usec / 1000);
 }
 
-void    usleep_precise(long long time_ms)
+void	usleep_precise(long long time_ms)
 {
-    long long start;
+	long long	start;
 
-    start = get_time();
-    while (get_time() - start < time_ms)
-    {
-        usleep(100);
-    }
+	start = get_time();
+	while (get_time() - start < time_ms)
+	{
+		usleep(100);
+	}
 }
-
