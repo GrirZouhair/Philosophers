@@ -18,6 +18,8 @@ int	main(int argc, char **argv)
 	t_philo		*philos;
 	int			num_philos;
 
+	if (argc != 5 && argc != 6)
+		return(error_msg_caller(1), 1);
 	num_philos = ft_atoi(argv[1]);
 	philos = malloc(sizeof(t_philo) * num_philos);
 	if (!philos)

@@ -80,3 +80,18 @@ int	ft_overflow_check(t_philo *philo)
 		return (0);
 	return (1);
 }
+// void cleanUp(t_data *data, t_philo *philos) {
+//     // 1. Destroy mutexes
+//     pthread_mutex_destroy(&data->dead_lock);
+//     pthread_mutex_destroy(&data->meal_lock);
+//     pthread_mutex_destroy(&data->write_lock);
+
+//     // 2. Destroy forks (if they're mutexes)
+//     for (int i = 0; i < philos->num_philos; i++) {
+//         pthread_mutex_destroy(&data->forks[i]);
+//     }
+//     free(data->forks);  // Free the forks array
+
+//     // 3. Free philosophers
+//     free(philos);
+// }

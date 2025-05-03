@@ -12,7 +12,7 @@
 
 #include "philo.h"
 
-static int	is_str(char *str)
+int	is_str(char *str)
 {
 	int	i;
 

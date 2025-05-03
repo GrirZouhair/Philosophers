@@ -52,6 +52,7 @@ typedef struct s_data
 }	t_data;
 
 void		error_msg_caller(int msg);
+int			is_str(char *str);
 int			ft_check_args(int ac, char **av);
 int			data_init(t_data *data, int num_phlos);
 int			init_all(int ac, char **av, t_data *data, t_philo *philo);

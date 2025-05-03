@@ -56,12 +56,14 @@ void	eat(t_philo *philo)
 	}
 	ft_message(philo, "is eating");
 	pthread_mutex_lock(philo->meal_lock);
-	philo->last_meal = get_time();
 	philo->eating_flag = 1;
+	pthread_mutex_unlock(philo->meal_lock);
+	usleep_precise(philo->time_to_eat);
+	pthread_mutex_lock(philo->meal_lock);
+	philo->last_meal = get_time();
 	philo->meals_eaten++;
 	philo->eating_flag = 0;
 	pthread_mutex_unlock(philo->meal_lock);
-	usleep_precise(philo->time_to_eat);
 	pthread_mutex_unlock(philo->l_fork);
 	pthread_mutex_unlock(philo->r_fork);
 }
@@ -77,7 +79,7 @@ void	*ft_lifesycle(void *arg)
 		return (NULL);
 	}
 	if (philo->id % 2 == 0)
-		usleep_precise(100);
+		usleep_precise(philo->time_to_eat);
 	while (!philo_dead_check(philo))
 	{
 		eat(philo);

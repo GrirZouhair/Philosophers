@@ -35,11 +35,23 @@ int	data_init(t_data *data, int num_philos)
 	if (pthread_mutex_init(&data->dead_lock, NULL) != 0)
 		return (error_msg_caller(6), 0);
 	if (pthread_mutex_init(&data->meal_lock, NULL) != 0)
+	{
+		pthread_mutex_destroy(&data->dead_lock);
 		return (error_msg_caller(6), 0);
+	}
 	if (pthread_mutex_init(&data->write_lock, NULL) != 0)
+	{
+		pthread_mutex_destroy(&data->dead_lock);
+		pthread_mutex_destroy(&data->meal_lock);
 		return (error_msg_caller(6), 0);
+	}
 	if (!init_mutexes(data, num_philos))
+	{
+		pthread_mutex_destroy(&data->dead_lock);
+		pthread_mutex_destroy(&data->meal_lock);
+		pthread_mutex_destroy(&data->write_lock);
 		return (0);
+	}
 	return (1);
 }
 

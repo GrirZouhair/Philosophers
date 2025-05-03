@@ -55,7 +55,7 @@ void	ft_monitoring(t_data *data, t_philo *philos)
 			pthread_mutex_unlock(&data->dead_lock);
 			return ;
 		}
-		usleep(1000);
+		usleep_precise(1000);
 	}
 }
 
