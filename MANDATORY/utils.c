@@ -80,17 +80,3 @@ int	ft_overflow_check(t_philo *philo)
 		return (0);
 	return (1);
 }
-void	destroy_all(t_data *data, t_philo *philo)
-{
-	int i = 0;
-
-	while (i < data->num_philos)
-	{
-		pthread_mutex_destroy(philo[i].l_fork);
-		pthread_mutex_destroy(&philo[i].meal_lock);
-		i++;
-	}
-
-	pthread_mutex_destroy(&data->write_lock);
-	pthread_mutex_destroy(&data->some_other_mutex);
-}

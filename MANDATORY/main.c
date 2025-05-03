@@ -26,5 +26,6 @@ int	main(int argc, char **argv)
 		return (error_msg_caller(5), 1);
 	if (!init_all(argc, argv, &data, philos))
 		return (free(philos), 1);
+	free(data.forks);
 	return (free(philos), 0);
 }
