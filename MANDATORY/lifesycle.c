@@ -6,30 +6,11 @@
 /*   By: zogrir <zogrir@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/10 22:36:28 by zogrir            #+#    #+#             */
-/*   Updated: 2025/04/20 11:06:11 by zogrir           ###   ########.fr       */
+/*   Updated: 2025/05/04 20:08:02 by zogrir           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
-
-int	philo_dead_check(t_philo *philo)
-{
-	pthread_mutex_lock(philo->dead_lock);
-	if (*(philo->dead))
-	{
-		return (pthread_mutex_unlock(philo->dead_lock), 1);
-	}
-	pthread_mutex_unlock(philo->dead_lock);
-	return (0);
-}
-
-void	ft_message(t_philo *philo, char *mesg)
-{
-	pthread_mutex_lock(philo->write_lock);
-	if (!philo_dead_check(philo))
-		printf("%lld %d %s\n", get_time() - philo->start_time, philo->id, mesg);
-	pthread_mutex_unlock(philo->write_lock);
-}
 
 void	dream(t_philo *philo)
 {
@@ -38,7 +19,7 @@ void	dream(t_philo *philo)
 	ft_message(philo, "is thinking");
 }
 
-void	eat(t_philo *philo)
+void	odd_even_philo(t_philo *philo)
 {
 	if (philo->id % 2 == 0)
 	{
@@ -54,6 +35,11 @@ void	eat(t_philo *philo)
 		pthread_mutex_lock(philo->r_fork);
 		ft_message(philo, "has taken a fork");
 	}
+}
+
+void	eat(t_philo *philo)
+{
+	odd_even_philo(philo);
 	ft_message(philo, "is eating");
 	pthread_mutex_lock(philo->meal_lock);
 	philo->eating_flag = 1;

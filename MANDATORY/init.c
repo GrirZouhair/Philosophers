@@ -6,7 +6,7 @@
 /*   By: zogrir <zogrir@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/02 13:17:25 by zogrir            #+#    #+#             */
-/*   Updated: 2025/04/20 11:42:48 by zogrir           ###   ########.fr       */
+/*   Updated: 2025/05/04 20:11:29 by zogrir           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,8 @@ static int	init_mutexes(t_data *data, int num_philos)
 	int	i;
 
 	i = 0;
+	if (num_philos == 0)
+		return (0);
 	data->forks = malloc(sizeof(pthread_mutex_t) * num_philos);
 	if (!data->forks)
 		return (error_msg_caller(6), 0);

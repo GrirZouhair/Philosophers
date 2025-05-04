@@ -6,7 +6,7 @@
 /*   By: zogrir <zogrir@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/12 01:46:04 by zogrir            #+#    #+#             */
-/*   Updated: 2025/04/16 11:54:12 by zogrir           ###   ########.fr       */
+/*   Updated: 2025/05/04 20:11:15 by zogrir           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ int	main(int argc, char **argv)
 	int			num_philos;
 
 	if (argc != 5 && argc != 6)
-		return(error_msg_caller(1), 1);
+		return (error_msg_caller(1), 1);
 	num_philos = ft_atoi(argv[1]);
 	philos = malloc(sizeof(t_philo) * num_philos);
 	if (!philos)

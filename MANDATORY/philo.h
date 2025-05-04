@@ -6,7 +6,7 @@
 /*   By: zogrir <zogrir@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/12 01:47:14 by zogrir            #+#    #+#             */
-/*   Updated: 2025/04/20 11:38:51 by zogrir           ###   ########.fr       */
+/*   Updated: 2025/05/04 20:10:07 by zogrir           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,7 @@ int			data_init(t_data *data, int num_phlos);
 int			init_all(int ac, char **av, t_data *data, t_philo *philo);
 long long	get_time(void);
 void		usleep_precise(long long time_ms);
+int			philo_dead_check(t_philo *philo);
 int			ft_atoi(const char *s);
 int			ft_zero_check(t_philo *philo);
 int			ft_overflow_check(t_philo *philo);

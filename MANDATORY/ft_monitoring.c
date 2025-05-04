@@ -6,7 +6,7 @@
 /*   By: zogrir <zogrir@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/20 11:27:18 by zogrir            #+#    #+#             */
-/*   Updated: 2025/04/20 11:44:21 by zogrir           ###   ########.fr       */
+/*   Updated: 2025/05/04 20:07:25 by zogrir           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,13 +57,4 @@ void	ft_monitoring(t_data *data, t_philo *philos)
 		}
 		usleep_precise(1000);
 	}
-}
-
-void	assign_forks(t_philo *philo, t_data *data, int i)
-{
-	philo[i].l_fork = &data->forks[i];
-	if (philo[i].num_philos == 1)
-		philo[i].r_fork = NULL;
-	else
-		philo[i].r_fork = &data->forks[(i + 1) % philo[i].num_philos];
 }
