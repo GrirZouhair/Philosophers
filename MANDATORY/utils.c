@@ -6,7 +6,7 @@
 /*   By: zogrir <zogrir@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/05 09:19:11 by zogrir            #+#    #+#             */
-/*   Updated: 2025/04/20 08:43:38 by zogrir           ###   ########.fr       */
+/*   Updated: 2025/05/06 05:09:15 by zogrir           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,13 +59,12 @@ int	ft_atoi(const char *s)
 
 int	ft_zero_check(t_philo *philo)
 {
-	if (philo->num_philos == 0
-		|| philo->time_to_die == 0
+	if (philo->time_to_die == 0
 		|| philo->time_to_eat == 0
 		|| philo->time_to_sleep == 0)
-		return (0);
+		return (error_msg_caller(3),0);
 	if (philo->max_meals == 0)
-		return (0);
+		return(error_msg_caller(3), 0);
 	return (1);
 }
 
@@ -75,8 +74,8 @@ int	ft_overflow_check(t_philo *philo)
 		|| philo->time_to_die == -1
 		|| philo->time_to_eat == -1
 		|| philo->time_to_sleep == -1)
-		return (0);
+		return (error_msg_caller(4), 0);
 	if (philo->max_meals == -1)
-		return (0);
+		return (error_msg_caller(4), 0);
 	return (1);
 }

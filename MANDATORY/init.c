@@ -6,7 +6,7 @@
 /*   By: zogrir <zogrir@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/02 13:17:25 by zogrir            #+#    #+#             */
-/*   Updated: 2025/05/04 20:11:29 by zogrir           ###   ########.fr       */
+/*   Updated: 2025/05/06 05:09:23 by zogrir           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ static int	init_mutexes(t_data *data, int num_philos)
 
 	i = 0;
 	if (num_philos == 0)
-		return (0);
+		return (error_msg_caller(3),0);
 	data->forks = malloc(sizeof(pthread_mutex_t) * num_philos);
 	if (!data->forks)
 		return (error_msg_caller(6), 0);
@@ -92,7 +92,7 @@ int	philo_init(t_philo *philo, t_data *data, char **av)
 	while (i < num_philos)
 	{
 		if (!init_philo_data(philo, data, i, av))
-			return (error_msg_caller(4), 0);
+			return (0);
 		if (pthread_create(&philo[i].thread, NULL,
 				&ft_lifesycle, &philo[i]) != 0)
 			return (error_msg_caller(7), 0);
