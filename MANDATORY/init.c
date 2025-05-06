@@ -6,7 +6,7 @@
 /*   By: zogrir <zogrir@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/02 13:17:25 by zogrir            #+#    #+#             */
-/*   Updated: 2025/05/06 17:10:24 by zogrir           ###   ########.fr       */
+/*   Updated: 2025/05/06 17:19:17 by zogrir           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,7 @@ static int	init_philo_data(t_philo *philo, t_data *data, int i, char **av)
 	else
 		philo[i].max_meals = -2;
 	if (!ft_zero_check(&philo[i]) || !ft_overflow_check(&philo[i]))
-		return (0);
+		return (free(data->forks), 0);
 	philo[i].start_time = get_time();
 	philo[i].last_meal = get_time();
 	philo[i].dead = &data->dead_flag;
