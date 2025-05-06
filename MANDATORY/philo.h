@@ -6,7 +6,7 @@
 /*   By: zogrir <zogrir@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/12 01:47:14 by zogrir            #+#    #+#             */
-/*   Updated: 2025/05/06 02:07:22 by zogrir           ###   ########.fr       */
+/*   Updated: 2025/05/06 05:58:53 by zogrir           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@
 # include <unistd.h>
 # include <pthread.h>
 # include <sys/time.h>
-#include  <limits.h>
+# include <limits.h>
 
 typedef struct s_philo
 {

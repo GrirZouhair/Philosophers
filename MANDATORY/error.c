@@ -6,7 +6,7 @@
 /*   By: zogrir <zogrir@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/12 01:52:30 by zogrir            #+#    #+#             */
-/*   Updated: 2025/05/06 05:09:01 by zogrir           ###   ########.fr       */
+/*   Updated: 2025/05/06 05:58:21 by zogrir           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,4 +28,6 @@ void	error_msg_caller(int msg)
 		printf("\033[1;31m🛑ERROR: Failed initialize mutexes for forks.\033[0m\n");
 	else if (msg == 7)
 		printf("\033[1;31m🛑ERROR: Failed to initialize print mutex.\033[0m\n");
+	else if (msg == 8)
+		printf("\033[1;31m🛑ERROR: Philosophers count must be <= 200\033[0m\n");
 }
