@@ -6,7 +6,7 @@
 /*   By: zogrir <zogrir@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/10 22:36:28 by zogrir            #+#    #+#             */
-/*   Updated: 2025/05/04 20:08:02 by zogrir           ###   ########.fr       */
+/*   Updated: 2025/05/05 23:56:28 by zogrir           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,9 +30,9 @@ void	odd_even_philo(t_philo *philo)
 	}
 	else
 	{
-		pthread_mutex_lock(philo->l_fork);
-		ft_message(philo, "has taken a fork");
 		pthread_mutex_lock(philo->r_fork);
+		ft_message(philo, "has taken a fork");
+		pthread_mutex_lock(philo->l_fork);
 		ft_message(philo, "has taken a fork");
 	}
 }

@@ -6,7 +6,7 @@
 /*   By: zogrir <zogrir@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/20 11:27:18 by zogrir            #+#    #+#             */
-/*   Updated: 2025/05/04 20:07:25 by zogrir           ###   ########.fr       */
+/*   Updated: 2025/05/06 03:27:03 by zogrir           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,8 @@ void	ft_monitoring(t_data *data, t_philo *philos)
 			pthread_mutex_unlock(&data->dead_lock);
 			return ;
 		}
-		usleep_precise(1000);
+		// usleep_precise(30);
+		usleep_precise(1500);
 	}
 }
+
