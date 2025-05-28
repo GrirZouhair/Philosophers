@@ -6,17 +6,21 @@
 /*   By: zogrir <zogrir@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/20 11:27:18 by zogrir            #+#    #+#             */
-/*   Updated: 2025/05/06 05:44:44 by zogrir           ###   ########.fr       */
+/*   Updated: 2025/05/28 11:49:44 by zogrir           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-static void	check_philosopher(t_data *data, t_philo *philo, int *all_full)
+static void	check_philosopher(t_data *data, t_philo *philo,
+		int *all_full, long *shortest_time)
 {
+	long	time_since_meal;
+	long	time_until_death;
+
 	pthread_mutex_lock(&data->meal_lock);
-	if (get_time() - (long)philo->last_meal > (long)philo->time_to_die
-		&& !philo->eating_flag)
+	time_since_meal = get_time() - philo->last_meal;
+	if (time_since_meal > philo->time_to_die && !philo->eating_flag)
 	{
 		pthread_mutex_lock(&data->dead_lock);
 		data->dead_flag = 1;
@@ -29,28 +33,25 @@ static void	check_philosopher(t_data *data, t_philo *philo, int *all_full)
 	}
 	if (philo->max_meals != -2 && philo->meals_eaten < philo->max_meals)
 		*all_full = 0;
+	time_until_death = philo->time_to_die - time_since_meal;
+	if (time_until_death < *shortest_time)
+		*shortest_time = time_until_death;
 	pthread_mutex_unlock(&data->meal_lock);
 }
 
 static void	check_philos_status(t_data *data, t_philo *philos,
 	int *all_full, long *shortest_time)
 {
-	int		i;
-	long	time_since_meal;
-	long	time_until_death;
+	int	i;
 
 	i = 0;
 	*all_full = 1;
 	*shortest_time = LONG_MAX;
 	while (i < philos[0].num_philos)
 	{
-		check_philosopher(data, &philos[i], all_full);
+		check_philosopher(data, &philos[i], all_full, shortest_time);
 		if (data->dead_flag)
 			return ;
-		time_since_meal = get_time() - philos[i].last_meal;
-		time_until_death = philos[i].time_to_die - time_since_meal;
-		if (time_until_death < *shortest_time)
-			*shortest_time = time_until_death;
 		i++;
 	}
 }
@@ -72,11 +73,13 @@ void	ft_monitoring(t_data *data, t_philo *philos)
 			pthread_mutex_unlock(&data->dead_lock);
 			return ;
 		}
-		if (shortest_time_to_die <= 10)
+		if (shortest_time_to_die <= 5)
 			usleep(100);
+		else if (shortest_time_to_die <= 20)
+			usleep(250);
 		else if (shortest_time_to_die <= 100)
-			usleep(500);
+			usleep(250);
 		else
-			usleep(1500);
+			usleep(500);
 	}
 }
