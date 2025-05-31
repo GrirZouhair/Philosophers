@@ -6,7 +6,7 @@
 /*   By: zogrir <zogrir@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/20 11:27:18 by zogrir            #+#    #+#             */
-/*   Updated: 2025/05/28 11:49:44 by zogrir           ###   ########.fr       */
+/*   Updated: 2025/05/31 11:40:12 by zogrir           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,8 +78,8 @@ void	ft_monitoring(t_data *data, t_philo *philos)
 		else if (shortest_time_to_die <= 20)
 			usleep(250);
 		else if (shortest_time_to_die <= 100)
-			usleep(250);
-		else
 			usleep(500);
+		else
+			usleep(1000);
 	}
 }

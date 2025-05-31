@@ -6,7 +6,7 @@
 /*   By: zogrir <zogrir@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/02 13:17:25 by zogrir            #+#    #+#             */
-/*   Updated: 2025/05/06 17:19:17 by zogrir           ###   ########.fr       */
+/*   Updated: 2025/05/31 11:43:44 by zogrir           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,6 +95,7 @@ int	philo_init(t_philo *philo, t_data *data, char **av)
 	{
 		if (!init_philo_data(philo, data, i, av))
 			return (0);
+		usleep(100);
 		if (pthread_create(&philo[i].thread, NULL,
 				&ft_lifesycle, &philo[i]) != 0)
 			return (error_msg_caller(7), 0);
