@@ -6,7 +6,7 @@
 /*   By: zogrir <zogrir@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/10 22:36:28 by zogrir            #+#    #+#             */
-/*   Updated: 2025/05/31 11:54:05 by zogrir           ###   ########.fr       */
+/*   Updated: 2025/05/31 12:40:16 by zogrir           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,6 +70,8 @@ void	*ft_lifesycle(void *arg)
 	{
 		eat(philo);
 		dream(philo);
+		if (philo->id % 16 == 0)
+			usleep(100);
 	}
 	return (0);
 }
